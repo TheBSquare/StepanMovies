@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from dtypes import SearchResult, Movie
-from utils.utils import string_to_uuid, get_max_quality
+from utils.utils import string_to_uuid, get_max_quality, is_valid_source
 
 
 class Parser:
@@ -47,8 +47,7 @@ class Parser:
                     link=movie_link,
                     title=title,
                     subtitle=subtitle,
-                    poster=poster,
-                    is_series=False
+                    poster=poster
                 )
             )
 
@@ -121,7 +120,7 @@ class Parser:
         return streams
 
     def get_movie_stream(self, movie: Movie):
-        if movie.source and time.time() - movie.watched <= 86400:
+        if movie.source and time.time() - movie.watched <= 86400 and is_valid_source(movie.source):
             return movie.source
 
         response = requests.get(movie.link, headers=self.headers)

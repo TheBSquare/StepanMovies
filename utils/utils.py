@@ -1,4 +1,4 @@
-
+import requests
 from screeninfo import get_monitors
 from uuid import uuid3, NAMESPACE_URL
 import json
@@ -47,3 +47,11 @@ def load_history(path=HISTORY_PATH) -> list[Movie]:
 
 def dump_history(movies: list[Movie], path=HISTORY_PATH):
     return json.dump(list(map(lambda x: x.to_dict(), movies)), open(path, "w"))
+
+
+def is_valid_source(movie: Movie) -> bool:
+    try:
+        return requests.get(movie.source, allow_redirects=False).status_code == 302
+
+    except Exception as err:
+        return False

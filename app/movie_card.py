@@ -1,6 +1,7 @@
 
 import flet as ft
 from dtypes import Movie
+import datetime
 
 
 class MovieCard(ft.ElevatedButton):
@@ -25,6 +26,16 @@ class MovieCard(ft.ElevatedButton):
         self.content = self.get_content()
 
     def get_content(self):
+        name_col = [
+            ft.Text(self.movie.title, color=ft.colors.WHITE, size=20),
+            ft.Text(self.movie.subtitle, color=ft.colors.WHITE, size=12, expand=True)
+        ]
+
+        if self.movie.watched:
+            name_col += [
+                ft.Text(datetime.datetime.fromtimestamp(self.movie.watched).strftime("%H:%M"), color=ft.colors.WHITE, size=12)
+            ]
+
         controls = [
             ft.Image(
                 src=self.movie.poster,
@@ -34,10 +45,7 @@ class MovieCard(ft.ElevatedButton):
             ),
             ft.Container(
                 content=ft.Column(
-                    controls=[
-                        ft.Text(self.movie.title, color=ft.colors.WHITE, size=20),
-                        ft.Text(self.movie.subtitle, color=ft.colors.WHITE, size=12)
-                    ],
+                    controls=name_col,
                 ),
                 expand=True
             )

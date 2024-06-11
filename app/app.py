@@ -122,17 +122,3 @@ class App(ft.Container):
         page.overlay.append(self.history_page.import_file_picker)
 
         page.add(self)
-
-
-"""
-,ft.Container(
-    content=ft.IconButton(
-        icon=ft.icons.SETTINGS,
-        icon_color=ft.colors.WHITE
-    ),
-    height=50,
-    width=50,
-    bgcolor="#121212",
-    border_radius=10,
-)
-"""
